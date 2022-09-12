@@ -16,7 +16,7 @@ class DishDetail extends Component {
                 <li key={commnt.id} style={{listStyle: 'none'}}>
                     <p>{commnt.comment}</p>
                     <p>-- {commnt.author}, {new Intl.DateTimeFormat('en-US', {
-                        year: 'numeric', month: 'long', day: '2-digit'}).format(new Date(commnt.date))}</p>
+                        year: 'numeric', month: 'short', day: '2-digit'}).format(new Date(commnt.date))}</p>
                  </li>    
             )
         });
