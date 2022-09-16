@@ -13,6 +13,6 @@ export const ConfigureStore = () => {
         leaders: Leaders
        })
     );
-
+    
     return store;
 }

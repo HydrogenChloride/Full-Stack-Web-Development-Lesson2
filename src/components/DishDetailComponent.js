@@ -28,7 +28,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
     }
 
-    function RenderComments( {comments} ){
+    function RenderComments( {comments, addComment, dishId} ){
         const dishComment = comments.map((commnt) => {
             return(
                 <li key={commnt.id} style={{listStyle: 'none'}}>
@@ -43,6 +43,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
             <div>
                 <h4>Comments</h4>
                 {dishComment}
+                <CommentForm dishId={dishId} addComment={addComment}/>
             </div>
         )
     }
@@ -67,8 +68,10 @@ const minLength = (len) => (val) => val && (val.length >= len);
                             <RenderDish dish={props.dish} />
                         </div>
                         <div className="col-12 col-md-5 m-1">
-                            <RenderComments comments={props.comments} />
-                            <CommentForm />
+                            <RenderComments comments={props.comments} 
+                                addComment={props.addComment}
+                                dishId={props.dish.id}
+                            />
                         </div>
                     </div>
                 </div>
@@ -99,12 +102,12 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
 
         handleSubmit(values) {
-            console.log('Current State is: ' + JSON.stringify(values));
-            alert('Current State is: ' + JSON.stringify(values));
+            this.toggleModal();
+            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+
         }
 
         render() {
-            console.log(this.state.isModalOpen)
             return(
                 <div>
                     <Button outline onClick={this.toggleModal}><span className="fa fa-pencil fa-lg"></span>Submit Comment</Button>
@@ -115,7 +118,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                             <Row className="form-group">
                                 <Label htmlFor="rating" md={12}>Rating</Label>
                                 <Col md={12}>
-                                    <Control.select model=".rating" name="rating"
+                                    <Control.select model=".rating" id="rating" name="rating"
                                         className="form-control">
                                         <option>1</option>
                                         <option>2</option>
@@ -126,9 +129,9 @@ const minLength = (len) => (val) => val && (val.length >= len);
                                 </Col>
                             </Row>
                             <Row className="form-group">
-                                <Label htmlFor="name" md={12}>Your Name</Label>
+                                <Label htmlFor="author" md={12}>Your Name</Label>
                                 <Col md={12}>
-                                    <Control.text model=".name" id="name" name="name"
+                                    <Control.text model=".author" id="author" name="author"
                                         placeholder="Your Name"
                                         className="form-control"
                                         validators={{
@@ -137,7 +140,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                                          />
                                     <Errors 
                                         className="text-danger"
-                                        model = ".name"
+                                        model = ".author"
                                         show="touched"
                                         messages={{
                                             required: 'Required ',
