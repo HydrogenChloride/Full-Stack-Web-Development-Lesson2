@@ -56,7 +56,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                         })}
                         </Stagger>
                     </ul>
-                    <CommentForm dishId={dishId} postcomment={postComment} />
+                    <CommentForm dishId={dishId} postComment={postComment} />
                 </div>    
             )
     }
