@@ -30,7 +30,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
         }
     }
 
-    function RenderComments( {comments, addComment, dishId} ){
+    function RenderComments({comments, postComment, dishId}) {
         const dishComment = comments.map((commnt) => {
             return(
                 <li key={commnt.id} style={{listStyle: 'none'}}>
@@ -45,13 +45,12 @@ const minLength = (len) => (val) => val && (val.length >= len);
             <div>
                 <h4>Comments</h4>
                 {dishComment}
-                <CommentForm dishId={dishId} addComment={addComment}/>
+                <CommentForm dishId={dishId} postComment={postComment} />
             </div>
         )
     }
 
     const DishDetail = (props) => {
-        const dish = props.dish;
         if (props.isLoading) {
             return(
                 <div className="container">
@@ -89,7 +88,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
                         </div>
                         <div className="col-12 col-md-5 m-1">
                             <RenderComments comments={props.comments} 
-                                addComment={props.addComment}
+                                postComment={props.postComment}
                                 dishId={props.dish.id}
                             />
                         </div>
@@ -124,7 +123,7 @@ const minLength = (len) => (val) => val && (val.length >= len);
 
         handleSubmit(values) {
             this.toggleModal();
-            this.props.addComment(this.props.dishId, values.rating, values.author, values.comment);
+            this.props.postComment(this.props.dishId, values.rating, values.author, values.comment);
 
         }
 
